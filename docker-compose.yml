@@ -1,0 +1,42 @@
+version: '3'
+services:
+  seckill-redis:
+    container_name: seckill-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: 'Asia/Shanghai'
+    command: redis-server --requirepass seckill9
+    networks:
+      - seckill-net
+
+  seckill-mysql:
+    container_name: seckill-mysql
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      TZ: 'Asia/Shanghai'
+      MYSQL_ROOT_PASSWORD: seckill9
+    networks:
+      - seckill-net
+
+  seckill-main:
+    container_name: wechat-product
+    build: .
+    image: wechat-product:v1.0
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: 'Asia/Shanghai'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    networks:
+      - seckill-net
+
+networks:
+  seckill-net:
+    external: true
