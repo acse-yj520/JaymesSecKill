@@ -7,7 +7,7 @@ services:
       - "6379:6379"
     environment:
       TZ: 'Asia/Shanghai'
-    command: redis-server --requirepass seckill9
+
     networks:
       - seckill-net
 
@@ -18,7 +18,7 @@ services:
       - 3306:3306
     environment:
       TZ: 'Asia/Shanghai'
-      MYSQL_ROOT_PASSWORD: seckill9
+
     networks:
       - seckill-net
 
