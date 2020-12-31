@@ -23,9 +23,9 @@ services:
       - seckill-net
 
   seckill-main:
-    container_name: wechat-product
+    container_name: seckill-main
     build: .
-    image: wechat-product:v1.0
+    image: seckill:v1.0
     ports:
       - "8080:8080"
     environment:
