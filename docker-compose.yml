@@ -30,8 +30,8 @@ services:
       - 15672:15672
     environment:
       TZ: 'Asia/Shanghai'
-      default_user: jaymes
-      default_password: seckill9
+      RABBITMQ_DEFAULT_USER: jaymes
+      RABBITMQ_DEFAULT_PASS: seckill9
     networks:
       - seckill-net
 

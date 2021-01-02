@@ -59,4 +59,28 @@ public class RedisService {
     String realKey = prefix.getPrefix() + key;
     return redisTemplate.delete(realKey);
   }
+
+  /**
+   * 判断对象存在
+   */
+  public boolean exists(KeyPrefix prefix, String key) {
+    String realKey = prefix.getPrefix() + key;
+    return redisTemplate.hasKey(realKey);
+  }
+
+  /**
+   * +1
+   */
+  public Long incr(KeyPrefix prefix, String key) {
+    String realKey = prefix.getPrefix() + key;
+    return redisTemplate.opsForValue().increment(realKey);
+  }
+
+  /**
+   * -1
+   */
+  public Long decr(KeyPrefix prefix, String key) {
+    String realKey = prefix.getPrefix() + key;
+    return redisTemplate.opsForValue().decrement(realKey);
+  }
 }
