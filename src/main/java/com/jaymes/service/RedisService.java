@@ -1,8 +1,10 @@
 package com.jaymes.service;
 
 import com.jaymes.entity.redis.KeyPrefix;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Jedis;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,13 @@ public class RedisService {
   public <T> boolean delete(KeyPrefix prefix, String key) {
     String realKey = prefix.getPrefix() + key;
     return redisTemplate.delete(realKey);
+  }
+
+  public boolean delete(KeyPrefix prefix) {
+    if (prefix == null) {
+      return false;
+    }
+    return redisTemplate.delete(prefix.getPrefix() + "*");
   }
 
   /**

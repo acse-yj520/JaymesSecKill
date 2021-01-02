@@ -1,5 +1,6 @@
 package com.jaymes.config;
 
+import com.jaymes.access.UserContext;
 import com.jaymes.entity.MiaoshaUser;
 import com.jaymes.service.MiaoshaUserService;
 import javax.servlet.http.Cookie;
@@ -28,30 +29,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-		HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-		HttpServletResponse response = webRequest.getNativeResponse(HttpServletResponse.class);
-		
-		String paramToken = request.getParameter(MiaoshaUserService.COOKI_NAME_TOKEN);
-		String cookieToken = getCookieValue(request, MiaoshaUserService.COOKI_NAME_TOKEN);
-		if(Strings.isEmpty(cookieToken) && Strings.isEmpty(paramToken)) {
-			return null;
-		}
-		String token = Strings.isEmpty(paramToken)?cookieToken:paramToken;
-		return userService.getByToken(response, token);
-	}
-
-	private String getCookieValue(HttpServletRequest request, String cookiName) {
-		Cookie[]  cookies = request.getCookies();
-		if(cookies == null || cookies.length <= 0){
-			return null;
-		}
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals(cookiName)) {
-				return cookie.getValue();
-			}
-		}
-		return null;
+			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+		return UserContext.getUser();
 	}
 
 }
